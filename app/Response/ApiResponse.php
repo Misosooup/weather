@@ -34,7 +34,7 @@ class ApiResponse
             'success' => false,
             'result' => null,
             'message' => $message,
-            'error' => $trace,
+            'error' => $trace, // this should not be showing in a production environment.
             'request_id' => '', // this is the trace id that will help us debug. Added via AWS or CF
         ], $code);
     }

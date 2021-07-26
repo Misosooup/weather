@@ -27,6 +27,20 @@ npm install
 npm run dev
 ```
 
+Access the API via the following URL
+```
+http://localhost:8000/api/weather?city=brisbane
+
+or
+
+http://localhost:8000/api/weather?city=brisbane&useMock=true [optional use mock flag if you hit api limit]
+```
+
+To access the frontend
+```
+http://localhost:8000/weather.html
+```
+
 Run the following command to execute the bash script
 ```shell script
  php artisan weather:fetch accuweather brisbane

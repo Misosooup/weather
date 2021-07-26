@@ -63,6 +63,14 @@ class Handler extends ExceptionHandler
         $this->logger->log(LogLevel::ERROR, $e->getMessage());
         $this->logger->log(LogLevel::ERROR, $e->getTraceAsString());
 
-        return ApiResponse::generateErrorResponse($e->getMessage(), $e->getCode(), $e->getTrace());
+        if ($e->getCode() >= 400) {
+            return ApiResponse::generateErrorResponse(
+                $e->getMessage(),
+                $e->getCode(),
+                $e->getTrace()
+            );
+        } else {
+            return parent::render($request, $e);
+        }
     }
 }
