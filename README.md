@@ -10,6 +10,8 @@
 * HTTPS is not required for this project.
 * All unit types are in metric
 * Hardcoded cities
+* I have hardcoded the api in the codebase. I know this is not correct and should be provided via SSM or .env file, or
+generated when we build the codebase.
 
 To start
 -
