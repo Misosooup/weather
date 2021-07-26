@@ -6,22 +6,34 @@ import fetch from 'node-fetch';
 function WeatherApp() {
     const weatherApiEndpoint = 'http://127.0.0.1:8000/api/weather';
     const [weathers, setWeathers] = useState([]);
+    const [useMock, setUseMock] = useState(false);
 
     const fetchWeather = (city) => {
-        let url = weatherApiEndpoint + '?city=' + city.name
+        let url = weatherApiEndpoint + '?city=' + city.name + '&useMock=' + useMock
 
         return fetch(url);
     }
 
-    const handleOnCitySelect = async (city) => {
-        const response = await fetchWeather(city);
-        const data = await response.json();
-        // assume that this will always pass
+    const handleOnChange = (event) => {
+        setUseMock(event.target.checked);
+    }
 
-        setWeathers(data.result);
+    const handleOnCitySelect = async (city) => {
+        try {
+            const response = await fetchWeather(city);
+            const data = await response.json();
+
+            setWeathers(data.result);
+        } catch (error) {
+            console.log(error);
+            setWeathers([]);
+        }
     }
 
     const generateWeatherBlock = () => {
+        if (!weathers) {
+            return null;
+        }
         return weathers.map((weather, index) => {
             return <div className="rounded shadow-lg" key={index}>
                 <div className="px-6 py-4">
@@ -50,9 +62,17 @@ function WeatherApp() {
             <div className="flex justify-center mt-10">
                 <h1 className="font-bold text-4xl">Please select a city to being.</h1>
             </div>
-            <div className="flex justify-center my-28">
-                <CitySelector onSelect={handleOnCitySelect}/>
+            <div className="flex justify-center mt-28">
+                <div className="grid grid-rows-1 grid-flow-col gap-4">
+                    <CitySelector onSelect={handleOnCitySelect}/>
+                </div>
             </div>
+            <div className="flex justify-center mt-10 mb-28">
+                <div className="grid grid-rows-1 grid-flow-col gap-4">
+                    Use mock data: <input type="checkbox" onChange={handleOnChange}/>
+                </div>
+            </div>
+
             <div className="flex justify-center m">
                 <div className="grid grid-rows-1 grid-flow-col gap-4">
                     {generateWeatherBlock()}

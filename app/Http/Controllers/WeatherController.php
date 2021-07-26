@@ -46,11 +46,16 @@ class WeatherController extends BaseController
             throw new InvalidRequestException();
         }
 
+        $useMock = false;
+        if ($request->query->has('useMock')) {
+            $useMock = $request->query->get('useMock') === 'true';
+        }
+
         // this will allow us to extend to different providers in the future without much
         // code changes
         $data = $this->providerFactory
             ->createWeatherProvider(WeatherProviderFactory::ACCU_WEATHER)
-            ->get($request->query->get(self::CITY_QUERYSTRING), true);
+            ->get($request->query->get(self::CITY_QUERYSTRING), $useMock);
 
         return ApiResponse::generateHttpResponse($data);
     }

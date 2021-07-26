@@ -12077,9 +12077,18 @@ function WeatherApp() {
       weathers = _useState2[0],
       setWeathers = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      useMock = _useState4[0],
+      setUseMock = _useState4[1];
+
   var fetchWeather = function fetchWeather(city) {
-    var url = weatherApiEndpoint + '?city=' + city.name;
+    var url = weatherApiEndpoint + '?city=' + city.name + '&useMock=' + useMock;
     return node_fetch__WEBPACK_IMPORTED_MODULE_4___default()(url);
+  };
+
+  var handleOnChange = function handleOnChange(event) {
+    setUseMock(event.target.checked);
   };
 
   var handleOnCitySelect = /*#__PURE__*/function () {
@@ -12089,25 +12098,33 @@ function WeatherApp() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return fetchWeather(city);
 
-            case 2:
+            case 3:
               response = _context.sent;
-              _context.next = 5;
+              _context.next = 6;
               return response.json();
 
-            case 5:
+            case 6:
               data = _context.sent;
-              // assume that this will always pass
               setWeathers(data.result);
+              _context.next = 14;
+              break;
 
-            case 7:
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              console.log(_context.t0);
+              setWeathers([]);
+
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 10]]);
     }));
 
     return function handleOnCitySelect(_x) {
@@ -12116,6 +12133,10 @@ function WeatherApp() {
   }();
 
   var generateWeatherBlock = function generateWeatherBlock() {
+    if (!weathers) {
+      return null;
+    }
+
     return weathers.map(function (weather, index) {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         className: "rounded shadow-lg",
@@ -12160,9 +12181,21 @@ function WeatherApp() {
         children: "Please select a city to being."
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "flex justify-center my-28",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_CitySelector__WEBPACK_IMPORTED_MODULE_3__.default, {
-        onSelect: handleOnCitySelect
+      className: "flex justify-center mt-28",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "grid grid-rows-1 grid-flow-col gap-4",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_CitySelector__WEBPACK_IMPORTED_MODULE_3__.default, {
+          onSelect: handleOnCitySelect
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "flex justify-center mt-10 mb-28",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "grid grid-rows-1 grid-flow-col gap-4",
+        children: ["Use mock data: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+          type: "checkbox",
+          onChange: handleOnChange
+        })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "flex justify-center m",
