@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Response\ApiResponse;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,6 +31,16 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(Container $container, LoggerInterface $logger)
+    {
+        parent::__construct($container);
+        $this->logger = $logger;
+    }
 
     /**
      * Register the exception handling callbacks for the application.
@@ -37,5 +52,25 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * @param Request $request
+     * @param Throwable $e
+     */
+    public function render($request, Throwable $e)
+    {
+        $this->logger->log(LogLevel::ERROR, $e->getMessage());
+        $this->logger->log(LogLevel::ERROR, $e->getTraceAsString());
+
+        if ($e->getCode() >= 400) {
+            return ApiResponse::generateErrorResponse(
+                $e->getMessage(),
+                $e->getCode(),
+                $e->getTrace()
+            );
+        } else {
+            return parent::render($request, $e);
+        }
     }
 }
