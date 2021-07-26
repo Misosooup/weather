@@ -55,7 +55,7 @@ If you have hit the API limit, you can always use the following option to use a 
  php artisan weather:fetch accuweather brisbane --useMock
 ```
 
-##Improvements
+## Improvements
 There are a few improvements that can be made to the frontend
 - Adding Icons to show the different weather types
 - Adding more cities to the drop down list and load it via ajax instead of populating it via a flat file / memory
@@ -66,6 +66,42 @@ As I am using the free version of accuweather api, there is a limit of 50 calls 
 - It calls city api to fetch a key from accuweather
 - The key will be used to fetch the 5 days forecast.
 - Supports only a few states stated below. This only applies to frontend. You can query more states if using the command.
+```
+const cities = [
+    {
+        "country": "AU",
+        "name": "Brisbane",
+    },
+    {
+        "country": "AU",
+        "name": "Melbourne",
+    },
+    {
+        "country": "AU",
+        "name": "Sydney",
+    },
+    {
+        "country": "AU",
+        "name": "Adelaide",
+    },
+    {
+        "country": "AU",
+        "name": "Perth",
+    },
+    {
+        "country": "AU",
+        "name": "Ipswich",
+    },
+    {
+        "country": "AU",
+        "name": "Gold coast",
+    },
+    {
+        "country": "AU",
+        "name": "Sunshine Coast",
+    },
+]
+```
 
 ## Design decision
 I have chose to use a factory pattern for this so I can pass in different providers. Each provider has
