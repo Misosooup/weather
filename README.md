@@ -2,8 +2,11 @@
 ## Requirement
 * npm version 12
 * php 7.3 and above
+* Port 8000 must be available.
 
-##Assumption things that are not scoped in this project
+### Assumption 
+
+things that are not scoped in this project
 * This application assumes that this is a public api and therefore any authentication is not required.
 * Rate limiting will not be handled and will not be considered as part of the scope of this project
 * Frontend CDN is not required to host any of the frontend files
