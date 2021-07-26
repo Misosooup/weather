@@ -65,5 +65,10 @@ There are a few improvements that can be made to the frontend
 As I am using the free version of accuweather api, there is a limit of 50 calls per day
 - It calls city api to fetch a key from accuweather
 - The key will be used to fetch the 5 days forecast.
+- Supports only a few states stated below. This only applies to frontend. You can query more states if using the command.
 
+## Design decision
+I have chose to use a factory pattern for this so I can pass in different providers. Each provider has
+a transformer which transforms the provider api data to a standardised response that is used by the frontend.
 
+Note: No test has been written of this project.
