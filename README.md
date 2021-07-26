@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-Run the follwing command to execute the bash script
+Run the following command to execute the bash script
 ```shell script
  php artisan weather:fetch accuweather brisbane
 ```
